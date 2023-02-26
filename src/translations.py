@@ -14,7 +14,7 @@ _XML_ATTR_NAME = "name"
 
 
 def _get_english_string_files(base_dir: str) -> [str]:
-    return pathlib.Path(base_dir).glob("**/src/*/res/values/strings.xml")
+    return list(pathlib.Path(base_dir).glob("**/src/*/res/values/strings.xml"))
 
 
 def _get_strings_to_translate(source_path: str) -> typing.Dict[str, ET.Element]:
@@ -118,6 +118,9 @@ def main():
     base_dir = os.getenv("GITHUB_WORKSPACE", ".")
 
     files = _get_english_string_files(base_dir=base_dir)
+    if len(files) == 0:
+        logging.error("No strings.xml found")
+        exit(1)
     for file in files:
         strings_to_translate = _get_strings_to_translate(file)
         # for k in strings_to_translate:
