@@ -13,7 +13,7 @@ and then run this action.
 
 ```yaml
   - name: Translate strings.xml to supported languages
-    uses: ashishb/android-auto-translate@v0.1
+    uses: ashishb/android-auto-translate@v0.4
 
   - uses: stefanzweifel/git-auto-commit-action@v4
     with:
