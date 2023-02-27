@@ -1,6 +1,6 @@
 ---
 # action.yml
-name: "Auto Translator Action"
+name: "Android Auto Translate"
 description: "Auto Translate Android's strings.xml"
 runs:
   using: 'docker'
