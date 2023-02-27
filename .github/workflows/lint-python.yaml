@@ -1,0 +1,40 @@
+---
+name: Lint Python Code
+
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches: [master]
+    paths:
+      - "**.py"
+      - ".github/workflows/lint-python.yaml"
+  pull_request:
+    branches: [master]
+    paths:
+      - "**.py"
+      - ".github/workflows/lint-python.yaml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  # Run this locally with act - https://github.com/nektos/act
+  # act -j lintPython
+  lintPython:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+
+      - name: Checkout respository
+        uses: actions/checkout@v3
+
+      - name: Check Python code for formatting
+        uses: rickstaa/action-black@v1
+        with:
+          # Specify config with "--config <file>" here
+          black_args: >
+            .
+            -S
+            --check
