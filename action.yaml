@@ -1,7 +1,11 @@
 ---
 # action.yml
+# Ref: https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
 name: "Android Auto Translate"
 description: "Auto Translate Android's strings.xml"
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
+branding:
+  icon: "globe"
+  color: "blue"
