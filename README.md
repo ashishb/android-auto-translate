@@ -10,15 +10,47 @@
 This GitHub Action auto-translates Android's strings.xml and
 fills in the missing translations in all other languages.
 
-To use this for a new language, say "hi", first create "values-hi/strings.xml" empty file
-and then run this action.
+To use this for a new language, say "es", first create "values-es/strings.xml" file with
+the following placeholder content
+
+```xml
+<resources>
+</resources>
+```
+
+and save the following to `.github/workflows/translate-android.yaml` in the repository.
 
 ```yaml
-  - name: Translate strings.xml to supported languages
-    uses: ashishb/android-auto-translate@v0.4
+---
+name: Automatically Translate Android App
 
-  - uses: stefanzweifel/git-auto-commit-action@v4
-    with:
-      commit_message: Add automatically generated string translations 
-      commit_user_name: "ashishb's Translation Bot"
+on:  # yamllint disable-line rule:truthy
+  pull_request:
+    branches: ["master", "main"]
+    paths:
+      - "**/strings.xml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  # Run locally with "act -j translateAndroid"
+  translateAndroid:
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Translate strings.xml to supported languages
+        uses: ashishb/android-auto-translate@v0.4
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Add automatically generated translations
+          commit_user_name: "ashishb's Translation Bot"
 ```
