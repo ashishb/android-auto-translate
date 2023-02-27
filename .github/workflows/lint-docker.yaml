@@ -6,12 +6,12 @@ on:  # yamllint disable-line rule:truthy
     branches: [main, master]
     paths:
       - "**/Dockerfile"
-      - ".github/workflows/lint-docker.yml"
+      - ".github/workflows/lint-docker.yaml"
   pull_request:
     branches: [main, master]
     paths:
       - "**/Dockerfile"
-      - ".github/workflows/lint-docker.yml"
+      - ".github/workflows/lint-docker.yaml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
