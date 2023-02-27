@@ -47,7 +47,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Translate strings.xml to supported languages
-        uses: ashishb/android-auto-translate@v0.4
+        uses: ashishb/android-auto-translate@v0.5
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
