@@ -112,6 +112,8 @@ def _translate(
         translated_string_xml_file, encoding="utf-8", xml_declaration=True, method="xml"
     )
 
+# Note: some of the code in this file is inspired from a similar work referenced below that uses ChatGPT
+# Ref: https://proandroiddev.com/using-openais-text-completion-api-for-android-translations-80846e03b9cb
 
 def main():
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
