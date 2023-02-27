@@ -1,3 +1,4 @@
+---
 # action.yml
 name: "Auto Translator Action"
 description: "Auto Translate Android's strings.xml"
