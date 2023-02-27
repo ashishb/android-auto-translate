@@ -8,5 +8,10 @@ and then run this action
 
 ```yaml
   - name: Translate strings.xml to supported languages
-    uses: ashishb/auto-translate-docker-action
+    uses: ashishb/android-auto-translate@v0.1
+
+  - uses: stefanzweifel/git-auto-commit-action@v4
+    with:
+      commit_message: Adds Translations
+      commit_user_name: "ashishb's Translation Bot"
 ```
