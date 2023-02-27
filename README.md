@@ -19,6 +19,6 @@ and then run this action.
 
   - uses: stefanzweifel/git-auto-commit-action@v4
     with:
-      commit_message: Adds Translations
+      commit_message: Add automatically generated string translations 
       commit_user_name: "ashishb's Translation Bot"
 ```
