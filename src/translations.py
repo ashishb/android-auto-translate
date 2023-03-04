@@ -58,6 +58,8 @@ def _normalize_response(text: str) -> str:
     text = text.replace("%S", "%s")
     text = text.replace("$D", "$d")
     text = text.replace("$S", "$s")
+    text = text.replace("d/ %", "d/%")
+    text = text.replace("f/ %", "f/%")
     # Replace Chinese % sign with standard English one or "%d" and "%s" won't work
     text = text.replace("％", "%")
     text = text.replace("...", "…")
