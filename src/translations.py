@@ -44,11 +44,14 @@ def _get_target_languages(res_dir: str) -> typing.Dict[str, str]:
     return result
 
 
-# Fix responses like \ "%1 $ S \" -> \"%1$s\"
-# TODO(ashishb): Add more support for floats like %4$.1f
 def _normalize_response(text: str) -> str:
+    # Fix responses like \ "%1 $ S \" -> \"%1$s\"
     pattern = r'%\s*([\d*])\s*\$\s*([sdfSDF])'
     text = re.sub(pattern, r'%\1$\2', text)
+    # Fix responses like %4 $ .1f -> %4$.1f
+    pattern = r'%\s*([\d*])\s*\$\s*(\d*\.\d+)([fF])'
+    text = re.sub(pattern, r'%\1$\2\3', text)
+
     text = text.replace('" ', '"')
     # text = text.replace(" \"", "\"")
     # text = text.replace(" \\\"", "\\\"")
@@ -64,6 +67,8 @@ def _normalize_response(text: str) -> str:
     text = text.replace("％", "%")
     text = text.replace("...", "…")
     text = text.replace(" …", "…")
+    text = text.replace("“", "\"")
+    text = text.replace("”", "\"")
     # TODO: escape apostrophe as well
     return text
 
