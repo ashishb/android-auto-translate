@@ -25,6 +25,8 @@ def test_normalize_responses():
     assert translations._normalize_response("%1 $ D") == "%1$d"
     assert translations._normalize_response("% 1$ D") == "%1$d"
     assert translations._normalize_response("% 1 $D") == "%1$d"
+
+    assert translations._normalize_response("%4 $ .1f") == "%4$.1f"
     # E.g. 200/300
     assert translations._normalize_response("d/ %") == "d/%"
     assert translations._normalize_response("f/ %") == "f/%"
@@ -32,3 +34,5 @@ def test_normalize_responses():
     # percentage sign that shows up in Chinese translations
     assert translations._normalize_response("%") == "%"
     assert translations._normalize_response("...") == "…"
+    assert translations._normalize_response("“") == "\""
+    assert translations._normalize_response("”") == "\""
