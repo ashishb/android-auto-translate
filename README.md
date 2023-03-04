@@ -5,6 +5,8 @@
 [![Lint Dockerfiles](https://github.com/ashishb/android-auto-translate/actions/workflows/lint-docker.yaml/badge.svg)](https://github.com/ashishb/android-auto-translate/actions/workflows/lint-docker.yaml)
 [![Lint Python Code](https://github.com/ashishb/android-auto-translate/actions/workflows/lint-python.yaml/badge.svg)](https://github.com/ashishb/android-auto-translate/actions/workflows/lint-python.yaml)
 
+[![Test Python Code](https://github.com/ashishb/android-auto-translate/actions/workflows/test-python.yaml/badge.svg)](https://github.com/ashishb/android-auto-translate/actions/workflows/test-python.yaml)
+
 [![Build Docker image](https://github.com/ashishb/android-auto-translate/actions/workflows/build-docker.yaml/badge.svg)](https://github.com/ashishb/android-auto-translate/actions/workflows/build-docker.yaml)
 
 This GitHub Action auto-translates Android's strings.xml and

@@ -3,12 +3,12 @@ name: Lint Python Code
 
 on:  # yamllint disable-line rule:truthy
   push:
-    branches: [master]
+    branches: [master, main]
     paths:
       - "**.py"
       - ".github/workflows/lint-python.yaml"
   pull_request:
-    branches: [master]
+    branches: [master, main]
     paths:
       - "**.py"
       - ".github/workflows/lint-python.yaml"
