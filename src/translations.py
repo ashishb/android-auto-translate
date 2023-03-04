@@ -3,6 +3,7 @@ import copy
 import logging
 import os
 import pathlib
+import re
 import sys
 import typing
 
@@ -44,22 +45,24 @@ def _get_target_languages(res_dir: str) -> typing.Dict[str, str]:
 
 
 # Fix responses like \ "%1 $ S \" -> \"%1$s\"
-# TODO(ashishb): Eventually replace this with RegEx
+# TODO(ashishb): Add more support for floats like %4$.1f
 def _normalize_response(text: str) -> str:
-    for i in range(1, 9):
-        for ch in ["d", "D", "s", "S"]:
-            text = text.replace(f"%{i} $ {ch}", f"%{i}${ch.lower()}")
-            text = text.replace(f"% {i} $ {ch}", f"%{i}${ch.lower()}")
+    pattern = r'%\s*([\d*])\s*\$\s*([sdfSDF])'
+    text = re.sub(pattern, r'%\1$\2', text)
     text = text.replace('" ', '"')
     # text = text.replace(" \"", "\"")
     # text = text.replace(" \\\"", "\\\"")
-    text = text.replace('\\ "', '\\"')
+    text = text.replace(r'\ "', r'\"')
+
     text = text.replace("%D", "%d")
     text = text.replace("%S", "%s")
+    text = text.replace("$D", "$d")
+    text = text.replace("$S", "$s")
     # Replace Chinese % sign with standard English one or "%d" and "%s" won't work
     text = text.replace("％", "%")
     text = text.replace("...", "…")
     text = text.replace(" …", "…")
+    # TODO: escape apostrophe as well
     return text
 
 

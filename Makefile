@@ -16,4 +16,9 @@ docker_print_image_size:
 python_lint:
 	black . -S
 
+python_test:
+	python3 -m pytest
+
 lint: python_lint
+
+test: python_test
