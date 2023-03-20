@@ -80,10 +80,9 @@ def _translate(
 ):
     if target_lang == "zh-rTW":
         target_lang = "zh-TW"
-    # Not supported
+    # Use "Portuguese for "pt-rBR"
     if target_lang == "pt-rBR":
-        logging.warning("Not supported: '%s'", target_lang)
-        return
+        target_lang = "pt"
     logging.info("Translating into '%s'...", translated_string_xml_file)
     translated_str = _get_strings_to_translate(translated_string_xml_file)
     translations_to_add: typing.Dict[str, ET.Element] = dict()
