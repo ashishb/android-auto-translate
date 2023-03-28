@@ -30,6 +30,10 @@ def test_normalize_responses():
     assert translations._normalize_response("%1 $, d") == "%1$,d"
     assert translations._normalize_response("%2 $, s") == "%2$,s"
     assert translations._normalize_response("de \"%1$s \"") == "de \"%1$s\""
+    assert (
+        translations._normalize_response("Dateien: %1$,d ( %2$s)")
+        == "Dateien: %1$,d (%2$s)"
+    )
 
     assert translations._normalize_response("%4 $ .1f") == "%4$.1f"
     # E.g. 200/300

@@ -56,6 +56,7 @@ def _normalize_response(text: str) -> str:
     # regex won't handle that properly and might remove more whitespace
     # than necessary
     text = re.sub(r'\"\s*(.*?)\s*\"', r'"\1"', text)
+    text = re.sub(r'\(\s*(.*?)\s*\)', r'(\1)', text)
 
     text = text.replace('" ', '"')
     # text = text.replace(" \"", "\"")
