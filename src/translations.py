@@ -51,6 +51,11 @@ def _normalize_response(text: str) -> str:
     # Fix responses like %4 $ .1f -> %4$.1f
     pattern = r'%\s*([\d*])\s*\$(,?)\s*(\d*\.\d+)([fF])'
     text = re.sub(pattern, r'%\1$\2\3\4', text)
+    # Remove extraneous spaces just before or after double-quotes
+    # TODO(ashishb): If there are multiple pair of quotes then this
+    # regex won't handle that properly and might remove more whitespace
+    # than necessary
+    text = re.sub(r'\"\s*(.*?)\s*\"', r'"\1"', text)
 
     text = text.replace('" ', '"')
     # text = text.replace(" \"", "\"")
