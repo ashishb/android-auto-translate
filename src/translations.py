@@ -46,11 +46,11 @@ def _get_target_languages(res_dir: str) -> typing.Dict[str, str]:
 
 def _normalize_response(text: str) -> str:
     # Fix responses like \ "%1 $ S \" -> \"%1$s\"
-    pattern = r'%\s*([\d*])\s*\$\s*([sdfSDF])'
-    text = re.sub(pattern, r'%\1$\2', text)
-    # Fix responses like %4 $ .1f -> %4$.1f
-    pattern = r'%\s*([\d*])\s*\$\s*(\d*\.\d+)([fF])'
+    pattern = r'%\s*([\d*])\s*\$(,?)\s*([sdfSDF])'
     text = re.sub(pattern, r'%\1$\2\3', text)
+    # Fix responses like %4 $ .1f -> %4$.1f
+    pattern = r'%\s*([\d*])\s*\$(,?)\s*(\d*\.\d+)([fF])'
+    text = re.sub(pattern, r'%\1$\2\3\4', text)
 
     text = text.replace('" ', '"')
     # text = text.replace(" \"", "\"")
@@ -62,6 +62,8 @@ def _normalize_response(text: str) -> str:
     text = text.replace("$D", "$d")
     text = text.replace("$S", "$s")
     text = text.replace("d/ %", "d/%")
+    text = text.replace("$,S", "$,s")
+    text = text.replace("$,D", "$,d")
     text = text.replace("f/ %", "f/%")
     # Replace Chinese % sign with standard English one or "%d" and "%s" won't work
     text = text.replace("％", "%")
