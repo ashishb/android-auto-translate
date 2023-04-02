@@ -27,7 +27,7 @@ and save the following to `.github/workflows/translate-android.yaml` in the repo
 name: Automatically Translate Android App
 
 on:  # yamllint disable-line rule:truthy
-  pull_request:
+  push:
     branches: ["master", "main"]
     paths:
       - "**/strings.xml"
@@ -51,8 +51,10 @@ jobs:
       - name: Translate strings.xml to supported languages
         uses: ashishb/android-auto-translate@v0.7
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
         with:
-          commit_message: Add automatically generated translations
-          commit_user_name: "ashishb's Translation Bot"
+          committer: "ashishb's Translation Bot <ashishb+android-auto-translate@ashishb.net>"
+          title: "[Bot]Auto-generated translations for non-English languages"
+          body: "Auto-generated translations by [Android Auto Translate](https://github.com/ashishb/android-auto-translate) bot"
 ```
