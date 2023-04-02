@@ -45,3 +45,5 @@ def test_normalize_responses():
     assert translations._normalize_response("...") == "…"
     assert translations._normalize_response("“") == "\""
     assert translations._normalize_response("”") == "\""
+
+    assert translations._normalize_response("l'artiste") == r"l\'artiste"

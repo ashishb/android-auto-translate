@@ -57,6 +57,8 @@ def _normalize_response(text: str) -> str:
     # than necessary
     text = re.sub(r'\"\s*(.*?)\s*\"', r'"\1"', text)
     text = re.sub(r'\(\s*(.*?)\s*\)', r'(\1)', text)
+    # Replace unescaped quotes
+    text = re.sub(r"([^\\])'", r"\1\'", text)
 
     text = text.replace('" ', '"')
     # text = text.replace(" \"", "\"")
