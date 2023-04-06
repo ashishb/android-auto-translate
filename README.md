@@ -58,3 +58,15 @@ jobs:
           title: "[Bot]Auto-generated translations for non-English languages"
           body: "Auto-generated translations by [Android Auto Translate](https://github.com/ashishb/android-auto-translate) bot"
 ```
+
+## How to run this locally
+
+```bash
+$ git clone https://github.com/ashishb/android-auto-translate
+...
+$ cd android-auto-translate
+...
+# Do note that this will modify strings.xml files in the specified
+# Android dir, so, don't forget to back them up first
+$ GITHUB_WORKSPACE=<path-to-android-base-dir> ./src/translations.py
+```
