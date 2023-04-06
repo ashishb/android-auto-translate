@@ -49,7 +49,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Translate strings.xml to supported languages
-        uses: ashishb/android-auto-translate@v0.7
+        uses: ashishb/android-auto-translate@master
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
