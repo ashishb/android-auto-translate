@@ -84,7 +84,7 @@ def _normalize_response(text: str) -> str:
 
 
 def _translate(
-    strings: typing.Dict[str, ET.Element],
+    src_strings: typing.Dict[str, ET.Element],
     target_lang: str,
     translated_string_xml_file: str,
 ):
@@ -94,22 +94,33 @@ def _translate(
     if target_lang == "pt-rBR":
         target_lang = "pt"
     logging.info("Translating into '%s'...", translated_string_xml_file)
-    translated_str = _get_strings_to_translate(translated_string_xml_file)
+    translated_strings = _get_strings_to_translate(translated_string_xml_file)
     translations_to_add: typing.Dict[str, ET.Element] = dict()
     num_translated = 0
-    translate = googletrans.Translator()
+    translator = googletrans.Translator()
 
-    for k in strings:
-        if translated_str.get(k, None) is not None:
+    # Strings that have been translated but are no longer part of the main
+    # file
+    translations_to_remove = list(
+        filter(lambda x: x not in src_strings, translated_strings)
+    )
+    logging.info(
+        '%d strings will be removed from %s',
+        len(translations_to_remove),
+        translated_string_xml_file,
+    )
+
+    for k in src_strings:
+        if translated_strings.get(k, None) is not None:
             continue
         logging.debug("Requires translation in '%s' -> '%s'", target_lang, k)
         num_translated += 1
         try:
-            translation = translate.translate(strings[k].text, dest=target_lang)
+            translation = translator.translate(src_strings[k].text, dest=target_lang)
         except:
             logging.error("Failed to translate")
             continue
-        element = copy.deepcopy(strings[k])
+        element = copy.deepcopy(src_strings[k])
         element.text = _normalize_response(translation.text)
         translations_to_add[k] = element
 
@@ -119,11 +130,15 @@ def _translate(
         target_lang,
         translated_string_xml_file,
     )
-    if num_translated == 0:
+    if num_translated == 0 and len(translations_to_remove) == 0:
         return
 
     xml_tree = ET.parse(translated_string_xml_file)
     qualified_strings_root = xml_tree.getroot()
+    for k in translations_to_remove:
+        for qualified_string in qualified_strings_root:
+            if qualified_string.attrib.get(_XML_ATTR_NAME) == k:
+                qualified_strings_root.remove(qualified_string)
     for k in translations_to_add:
         qualified_strings_root.append(translations_to_add[k])
     logging.info("Writing changes to '%s'", translated_string_xml_file)
