@@ -42,6 +42,8 @@ def test_normalize_responses():
 
     # percentage sign that shows up in Chinese translations
     assert translations._normalize_response("%") == "%"
+    # percentage sign from Arabic translations
+    assert translations._normalize_response("٪") == "%"
     assert translations._normalize_response("...") == "…"
     assert translations._normalize_response("“") == "\""
     assert translations._normalize_response("”") == "\""
