@@ -45,6 +45,8 @@ def _get_target_languages(res_dir: str) -> typing.Dict[str, str]:
 
 
 def _normalize_response(text: str) -> str:
+    text = text.replace("$、d", "$d")
+    text = text.replace("$、s", "$s")
     # Fix responses like \ "%1 $ S \" -> \"%1$s\"
     pattern = r'%\s*([\d*])\s*\$(,?)\s*([sdfSDF])'
     text = re.sub(pattern, r'%\1$\2\3', text)
@@ -88,6 +90,8 @@ def _translate(
     target_lang: str,
     translated_string_xml_file: str,
 ):
+    # See the full list of language codes here
+    # https://py-googletrans.readthedocs.io/en/latest/#googletrans-languages
     if target_lang == "zh-rTW":
         target_lang = "zh-TW"
     # Use "Portuguese for "pt-rBR"
@@ -117,12 +121,17 @@ def _translate(
         num_translated += 1
         try:
             translation = translator.translate(src_strings[k].text, dest=target_lang)
-        except:
-            logging.error("Failed to translate")
+        except Exception as e:
+            logging.error(
+                "Failed to translate '%s' to '%s': %s"
+                % (src_strings[k].text, target_lang, e)
+            )
             continue
         element = copy.deepcopy(src_strings[k])
         element.text = _normalize_response(translation.text)
         translations_to_add[k] = element
+        if num_translated % 10 == 0:
+            logging.info("Num translated: %d/%d", num_translated, len(src_strings))
 
     logging.info(
         "Translated %d strings to (%s, %s)",

@@ -46,4 +46,7 @@ def test_normalize_responses():
     assert translations._normalize_response("“") == "\""
     assert translations._normalize_response("”") == "\""
 
+    # Happens with Japanese
+    assert translations._normalize_response("$、d") == "$d"
+
     assert translations._normalize_response("l'artiste") == r"l\'artiste"
