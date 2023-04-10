@@ -122,15 +122,22 @@ def _translate(
             continue
         logging.debug("Requires translation in '%s' -> '%s'", target_lang, k)
         num_translated += 1
-        try:
-            translation = translator.translate(src_strings[k].text, dest=target_lang)
-            if num_translated > 1:
-                time.sleep(1.5)
-        except Exception as e:
-            logging.error(
-                "Failed to translate '%s' to '%s': %s"
-                % (src_strings[k].text, target_lang, e)
-            )
+        attempts = 0
+        while attempts < 3:
+            try:
+                translation = translator.translate(src_strings[k].text, dest=target_lang)
+                success = True
+                if num_translated > 1:
+                    time.sleep(0.7)
+                break
+            except Exception as e:
+                logging.error(
+                    "Failed to translate '%s' to '%s': %s"
+                    % (src_strings[k].text, target_lang, e)
+                )
+                attempts += 1
+        
+        if attempts == 3:
             continue
         element = copy.deepcopy(src_strings[k])
         element.text = _normalize_response(translation.text)
