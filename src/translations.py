@@ -125,7 +125,7 @@ def _translate(
         try:
             translation = translator.translate(src_strings[k].text, dest=target_lang)
             if num_translated > 1:
-                time.sleep(1.5)
+                time.sleep(0.7)
         except Exception as e:
             logging.error(
                 "Failed to translate '%s' to '%s': %s"
