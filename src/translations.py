@@ -124,8 +124,6 @@ def _translate(
         num_translated += 1
         try:
             translation = translator.translate(src_strings[k].text, dest=target_lang)
-            if num_translated > 1:
-                time.sleep(0.7)
         except Exception as e:
             logging.error(
                 "Failed to translate '%s' to '%s': %s"
@@ -137,6 +135,10 @@ def _translate(
         translations_to_add[k] = element
         if num_translated % 10 == 0:
             logging.info("Num translated: %d/%d", num_translated, len(src_strings))
+
+        # sleep to avoid hitting Google Translation API's rate limits
+        if num_translated > 1:
+            time.sleep(0.7)
 
     logging.info(
         "Translated %d strings to (%s, %s)",
