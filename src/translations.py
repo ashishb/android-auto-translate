@@ -6,6 +6,7 @@ import pathlib
 import re
 import sys
 import typing
+import time
 
 import xml.etree.ElementTree as ET
 import googletrans
@@ -134,6 +135,10 @@ def _translate(
         translations_to_add[k] = element
         if num_translated % 10 == 0:
             logging.info("Num translated: %d/%d", num_translated, len(src_strings))
+
+        # sleep to avoid hitting Google Translation API's rate limits
+        if num_translated > 1:
+            time.sleep(0.7)
 
     logging.info(
         "Translated %d strings to (%s, %s)",
