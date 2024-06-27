@@ -13,11 +13,14 @@ docker_run: docker_build
 docker_print_image_size:
 	docker image inspect ${DOCKER_TAG} --format='{{.Size}}' | numfmt --to=iec-i
 
+install:
+	poetry install
+
 python_lint:
-	black . -S
+	poetry run black . -S
 
 python_test:
-	python3 -m pytest
+	poetry run pytest
 
 lint: python_lint
 
