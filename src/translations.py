@@ -97,9 +97,13 @@ def _translate(
     # https://py-googletrans.readthedocs.io/en/latest/#googletrans-languages
     if target_lang == "zh-rTW":
         target_lang = "zh-TW"
-    # Use "Portuguese for "pt-rBR"
-    if target_lang == "pt-rBR":
+    elif target_lang == "pt-rBR":  # Use "Portuguese for "pt-rBR"
         target_lang = "pt"
+    elif target_lang == "in":
+        # Use "id" for "in" (in is old ISO-2 name for Indonesian that Android and Java use)
+        target_lang = "id"
+    elif target_lang == "iw":
+        target_lang = "he"
     logging.info("Translating into '%s'...", translated_string_xml_file)
     translated_strings = _get_strings_to_translate(translated_string_xml_file)
     translations_to_add: typing.Dict[str, ET.Element] = dict()
