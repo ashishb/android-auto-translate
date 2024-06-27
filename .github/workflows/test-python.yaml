@@ -48,7 +48,7 @@ jobs:
         run: make install
 
       - name: Lint
-        run: make lint
+        run: make python_lint
 
       - name: Test
         run: make test
