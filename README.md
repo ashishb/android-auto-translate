@@ -9,8 +9,10 @@
 
 [![Build Docker image](https://github.com/ashishb/android-auto-translate/actions/workflows/build-docker.yaml/badge.svg)](https://github.com/ashishb/android-auto-translate/actions/workflows/build-docker.yaml)
 
-This GitHub Action auto-translates Android's strings.xml and
+This GitHub Action auto-translates Android's `strings.xml` and
 fills in the missing translations in all other languages.
+
+It also deletes any translations that is no longer defined in default `strings.xml`.
 
 To use this for a new language, say "es", first create "values-es/strings.xml" file with
 the following placeholder content
