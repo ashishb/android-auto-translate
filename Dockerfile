@@ -2,9 +2,9 @@ FROM python:3.12-slim as base
 
 FROM base as builder
 # Install Poetry
-RUN pip3 install poetry==1.8.3
+RUN pip install --no-cache-dir poetry==1.8.3
 WORKDIR /app
-COPY pyproject.toml poetry.lock /app
+COPY pyproject.toml poetry.lock /app/
 # virtual env is created in "/app/.venv" directory
 ENV POETRY_NO_INTERACTION=1 \
 POETRY_VIRTUALENVS_IN_PROJECT=1 \

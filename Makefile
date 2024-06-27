@@ -16,12 +16,15 @@ docker_print_image_size:
 install:
 	poetry install
 
+docker_lint:
+	hadolint Dockerfile
+
 python_lint:
 	poetry run black . -S
 
 python_test:
 	poetry run pytest
 
-lint: python_lint
+lint: docker_lint python_lint
 
 test: python_test
