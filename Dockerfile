@@ -20,4 +20,4 @@ COPY src /app/src
 COPY --from=builder /app/.venv /app/.venv
 ENV PATH="/app/.venv/bin:$PATH"
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/src/translations.py"]
+ENTRYPOINT ["/app/src/translations.py"]
