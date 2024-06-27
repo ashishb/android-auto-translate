@@ -41,19 +41,14 @@ jobs:
         with:
           python-version: "3.11"
 
-      - uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
 
       - name: Install dependencies
-        run: |
-          make install
+        run: make install
 
       - name: Lint
         run: make lint
 
-      - name: Test with pytest
+      - name: Test
         run: make test
