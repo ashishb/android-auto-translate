@@ -72,3 +72,9 @@ $ cd android-auto-translate
 # Android dir, so, don't forget to back them up first
 $ GITHUB_WORKSPACE=<path-to-android-base-dir> poetry run ./src/translations.py
 ```
+
+## Used by
+
+1. [MusicSync](https://musicsync.ashishb.net/)
+1. [ChatPaths](https://github.com/gyund/chatpaths/blob/main/.github/workflows/translate.yml)
+1. [eFurry](https://github.com/eFurry/android-translation/blob/main/.github/workflows/translate-android.yml)
