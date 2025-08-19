@@ -34,7 +34,7 @@ jobs:
     steps:
 
       - name: Checkout respository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python3
         uses: actions/setup-python@v5
