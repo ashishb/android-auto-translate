@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 googletrans = "4.0.0rc1"
+legacy-cgi = "^2.6.4"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^9.0.3"
