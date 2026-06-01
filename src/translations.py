@@ -173,7 +173,12 @@ def _translate(
 
 def main():
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-    base_dir = os.getenv("GITHUB_WORKSPACE", ".")
+    base_dir = os.getenv("GITHUB_WORKSPACE", None)
+    if not base_dir:
+        logging.fatal(
+            "Please provide path to Android project as GITHUB_WORKSPACE env variable"
+        )
+        quit(1)
 
     files = _get_english_string_files(base_dir=base_dir)
     if len(files) == 0:
