@@ -14,20 +14,20 @@ docker_print_image_size:
 	docker image inspect ${DOCKER_TAG} --format='{{.Size}}' | numfmt --to=iec-i
 
 install:
-	poetry install
+	uv sync --locked
 
 docker_lint:
 	hadolint Dockerfile
 
 python_lint:
 	# stop the build if there are Python syntax errors or undefined names
-	poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+	uv run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude=.venv
 	# exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-	poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-	poetry run black . -S
+	uv run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude=.venv
+	uv run black . -S --exclude=.venv
 
 python_test:
-	poetry run pytest
+	uv run pytest
 
 lint: docker_lint python_lint
 

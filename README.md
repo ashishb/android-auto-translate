@@ -70,7 +70,7 @@ $ cd android-auto-translate
 ...
 # Do note that this will modify strings.xml files in the specified
 # Android dir, so, don't forget to back them up first
-$ GITHUB_WORKSPACE=<path-to-android-base-dir> poetry run ./src/translations.py
+$ GITHUB_WORKSPACE=<path-to-android-base-dir> uv run ./src/translations.py
 ```
 
 ## Used by

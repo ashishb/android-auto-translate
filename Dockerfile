@@ -1,23 +1,21 @@
-FROM python:3.12-slim as base
+FROM python:3.12-slim AS base
 
-FROM base as builder
-# Install Poetry
-RUN pip install --no-cache-dir poetry==1.8.3
+FROM ghcr.io/astral-sh/uv:python3.12-trixie-slim AS builder
+
 WORKDIR /app
-COPY pyproject.toml poetry.lock /app/
-# virtual env is created in "/app/.venv" directory
-ENV POETRY_NO_INTERACTION=1 \
-POETRY_VIRTUALENVS_IN_PROJECT=1 \
-POETRY_VIRTUALENVS_CREATE=true \
-POETRY_CACHE_DIR=/tmp/poetry_cache
+# Only copy uv.lock and not pyproject.toml
+# This ensures hermiticity of the build
+# And prevents docker image invalidation in case non-dependency changes
+# are made to pyproject.toml
+COPY uv.lock /app
 # Install dependencies
-RUN --mount=type=cache,target=/tmp/poetry_cache poetry install --only main --no-root
-RUN poetry install
+# virtual env is created in "/app/.venv" directory
+RUN uv init --name src && uv sync --no-dev --frozen
 
-
-FROM base as runner
+FROM base AS runner
 COPY src /app/src
 COPY --from=builder /app/.venv /app/.venv
 ENV PATH="/app/.venv/bin:$PATH"
-# Code file to execute when the docker container starts up (`entrypoint.sh`)
+ENV PYTHONPATH=/app/.venv/lib/python3.12/site-packages
+# Code file to execute when the docker container starts up
 ENTRYPOINT ["/app/src/translations.py"]
