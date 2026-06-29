@@ -33,7 +33,7 @@ jobs:
 
     steps:
 
-      - name: Checkout respository
+      - name: Checkout repository
         uses: actions/checkout@v7
 
       - name: Set up Python3
